@@ -1,98 +1,123 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio Créatif</title>
-  <link href="https://www.abctravaux.org/wp-content/uploads/2022/06/picture-materiel-ebeniste-conseils-choisir-votre-2048x1364.jpg" rel="stylesheet"/>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Louis — Photographie</title>
+
+<style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue:  #2c3e50;
-      --cream: #f7f4ef;
-      --white: #ffffff;
-      --muted: #8a9aaa;
-      --rule:  rgba(44,62,80,0.11);
+      --noir:  #111111;
+      --blanc: #ffffff;
+      --soft:  #f2f2f2;
+      --muted: #9a9a9a;
+      --rule:  rgba(17,17,17,0.12);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--white);
-      color: var(--blue);
-      font-family: 'Jost', sans-serif;
+      background: var(--blanc);
+      color: var(--noir);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
       font-weight: 300;
       overflow-x: hidden;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
-    /* ══ BURGER ══ */
-    .burger-btn {
-      position: fixed; top: 28px; right: 36px; z-index: 600;
-      width: 48px; height: 48px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; background: none; border: none;
+    /* ══ HEADER ══ */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 600;
+      background: #ffffff;
+      height: 84px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 40px;
     }
-    .burger-box { width: 28px; display: flex; flex-direction: column; gap: 6px; }
-    .burger-box span {
-      display: block; height: 1.5px; background: var(--blue);
-      transition: all 0.4s cubic-bezier(0.76,0,0.24,1); transform-origin: center;
-    }
-    .burger-box span:nth-child(2) { width: 70%; margin-left: auto; }
-    body.menu-open .burger-box span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
-    body.menu-open .burger-box span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    body.menu-open .burger-box span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
-    body.menu-open .burger-box span { background: var(--cream); }
 
-    /* ══ MENU PLEIN ÉCRAN ══ */
-    .fullmenu {
-      position: fixed; inset: 0; background: var(--blue); z-index: 500;
-      display: flex; align-items: center; padding: 80px 10vw;
-      clip-path: circle(0% at calc(100% - 60px) 52px);
-      transition: clip-path 0.75s cubic-bezier(0.76,0,0.24,1);
-      pointer-events: none;
+    /* Instagram icon (left) */
+    .insta-link {
+      justify-self: start;
+      display: flex;
+      align-items: center;
+      transition: opacity 0.25s ease;
     }
-    body.menu-open .fullmenu { clip-path: circle(150% at calc(100% - 60px) 52px); pointer-events: all; }
-    .menu-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-    .menu-nav li { overflow: hidden; }
-    .menu-nav a {
-      display: block;
-      font-family: 'Cormorant Garamond', serif; font-weight: 300;
-      font-size: clamp(38px, 6vw, 80px); line-height: 1.08;
-      color: var(--cream); text-decoration: none; letter-spacing: -1px;
-      transform: translateY(110%);
-      transition: transform 0.7s cubic-bezier(0.76,0,0.24,1), color 0.2s;
-    }
-    .menu-nav a:hover { color: rgba(247,244,239,0.38); }
-    body.menu-open .menu-nav li:nth-child(1) a { transform: translateY(0); transition-delay: 0.12s; }
-    body.menu-open .menu-nav li:nth-child(2) a { transform: translateY(0); transition-delay: 0.18s; }
-    body.menu-open .menu-nav li:nth-child(3) a { transform: translateY(0); transition-delay: 0.24s; }
-    body.menu-open .menu-nav li:nth-child(4) a { transform: translateY(0); transition-delay: 0.30s; }
-    body.menu-open .menu-nav li:nth-child(5) a { transform: translateY(0); transition-delay: 0.36s; }
-    body.menu-open .menu-nav li:nth-child(6) a { transform: translateY(0); transition-delay: 0.42s; }
-    .menu-footer {
-      position: absolute; bottom: 40px; left: 10vw; right: 10vw;
-      display: flex; justify-content: space-between; align-items: flex-end;
-      opacity: 0; transition: opacity 0.4s 0.55s;
-    }
-    body.menu-open .menu-footer { opacity: 1; }
-    .menu-email { font-size: 13px; color: rgba(247,244,239,0.35); letter-spacing: 0.06em; }
-    .menu-socials { display: flex; gap: 24px; }
-    .menu-socials a {
-      font-size: 11px; color: rgba(247,244,239,0.3);
-      text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .menu-socials a:hover { color: var(--cream); }
+    .insta-link:hover { opacity: 0.55; }
+    .insta-link svg { width: 22px; height: 22px; display: block; }
 
-    /* ══ LOGO ══ */
+    /* Logo (center) */
     .site-logo {
-      position: fixed; top: 30px; left: 36px; z-index: 600;
-      font-family: 'Cormorant Garamond', serif; font-weight: 600;
-      font-size: 20px; letter-spacing: 0.04em;
-      color: var(--blue); text-decoration: none; transition: color 0.3s;
+      justify-self: center;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      color: var(--noir);
+      text-decoration: none;
+      font-weight: 400;
+      text-transform: lowercase;
+      font-style: italic;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      transition: color 0.3s;
     }
-    body.menu-open .site-logo { color: var(--cream); }
+    body.menu-open .site-logo { color: var(--blanc); }
+
+    /* Hamburger (right) */
+    .burger-btn {
+      justify-self: end;
+      width: 32px; height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+    .burger-btn span {
+      display: block;
+      width: 26px;
+      height: 2px;
+      background: var(--noir);
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+    body.menu-open .burger-btn span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    body.menu-open .burger-btn span:nth-child(2) { opacity: 0; }
+    body.menu-open .burger-btn span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* ══ NAV OVERLAY ══ */
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      z-index: 590;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease;
+    }
+    body.menu-open .nav-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+    .nav-overlay ul {
+      list-style: none;
+      text-align: center;
+    }
+    .nav-overlay li { margin: 22px 0; }
+    .nav-overlay a {
+      font-size: 32px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--noir);
+      text-decoration: none;
+    }
 
     /* ══ PAGE HEADER ══ */
     .page-header {
@@ -109,146 +134,193 @@
     }
     .header-eyebrow::before { content:''; width: 24px; height: 1px; background: var(--muted); }
     .page-title {
-      font-family: 'Cormorant Garamond', serif; font-weight: 300;
-      font-size: clamp(44px, 6vw, 80px); line-height: 0.95; letter-spacing: -2px;
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.02em;
+      font-size: clamp(40px, 6vw, 76px); line-height: 0.98;
+      color: var(--noir);
       opacity: 0; animation: up 0.9s 0.2s forwards;
     }
-    .page-title em { font-style: italic; color: var(--muted); }
+    .page-title em { font-style: normal; font-weight: 300; color: var(--muted); }
     .header-right {
       text-align: right;
       opacity: 0; animation: up 0.9s 0.35s forwards;
     }
-    .header-count {
-      font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300;
-      letter-spacing: -1px; line-height: 1;
+    .header-name {
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 15px; font-weight: 400;
+      color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 4px;
     }
-    .header-count span { font-size: 14px; color: var(--muted); letter-spacing: 0.1em; }
-    .header-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-top: 4px; }
+    .header-tagline { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
 
-    /* ══ SECTION WEB ══ */
-    .web-section {
-      padding: 72px 40px 80px;
-      max-width: 1200px; margin: 0 auto;
+    /* ══ NAV STICKY ══ */
+    .cat-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--blanc); border-bottom: 1px solid var(--rule);
+      padding: 0 40px; display: flex; overflow-x: auto; scrollbar-width: none;
+      opacity: 0; animation: up 0.7s 0.45s forwards;
     }
+    .cat-nav::-webkit-scrollbar { display: none; }
+    .cat-tab {
+      flex-shrink: 0; padding: 15px 20px;
+      border: none; border-bottom: 2px solid transparent;
+      background: none; font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer;
+      transition: color 0.2s, border-color 0.2s; text-decoration: none;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .cat-tab:hover { color: var(--noir); }
+    .cat-tab.active { color: var(--noir); border-bottom-color: var(--noir); }
+    .cat-tab .cnt {
+      font-size: 9px; background: var(--soft); color: var(--muted);
+      padding: 2px 6px; border-radius: 20px;
+    }
+    .cat-tab.active .cnt { background: var(--noir); color: var(--blanc); }
 
-    /* ══ GRILLE PROJETS ══ */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
-    }
+    /* ══ SECTION CATÉGORIE ══ */
+    .cat-section { padding: 56px 40px 0; }
+    .cat-section:last-of-type { padding-bottom: 72px; }
 
-    /* ══ CARTE PROJET ══ */
-    .project-card {
-      background: var(--white);
-      border: 1px solid var(--rule);
-      overflow: hidden;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      display: flex; flex-direction: column;
-    }
-    .project-card:hover {
-      border-color: rgba(44,62,80,0.22);
-      box-shadow: 0 12px 40px rgba(44,62,80,0.09);
-    }
-
-    /* Fenêtre navigateur simulée */
-    .browser-bar {
-      background: var(--cream);
+    .cat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px; padding-bottom: 14px;
       border-bottom: 1px solid var(--rule);
-      padding: 10px 14px;
-      display: flex; align-items: center; gap: 10px;
-      flex-shrink: 0;
     }
-    .browser-dots { display: flex; gap: 5px; }
-    .browser-dots span {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: rgba(44,62,80,0.15);
+    .cat-title {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 600;
+      font-size: 26px; letter-spacing: -0.2px; color: var(--noir);
     }
-    .browser-url {
-      flex: 1; background: rgba(44,62,80,0.07);
-      padding: 4px 10px; border-radius: 4px;
-      font-size: 10px; color: var(--muted); letter-spacing: 0.04em;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    .cat-icon { font-size: 20px; }
+    .cat-badge {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); padding: 5px 12px; border: 1px solid var(--rule);
     }
 
-    /* Preview screenshot */
-    .project-preview {
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
+    /* ══ GRILLE 3 colonnes, format 3:4 ══ */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    /* ══ CARTE PHOTO — PROTÉGÉE ══ */
+    .photo-card {
       position: relative;
-      background: #e4e8ec;
-      flex-shrink: 0;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background: var(--soft);
+      cursor: pointer;
     }
-    .project-preview img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform 0.8s cubic-bezier(0.76,0,0.24,1);
-      -webkit-user-drag: none; pointer-events: none;
+    .photo-card::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 10;
+      -webkit-user-drag: none;
     }
-    .project-card:hover .project-preview img { transform: scale(1.04); }
-
-    /* Overlay numéro */
-    .preview-num {
-      position: absolute; top: 12px; right: 14px;
-      font-family: 'Cormorant Garamond', serif; font-size: 11px;
-      color: rgba(255,255,255,0.5); letter-spacing: 0.15em;
+    .photo-bg {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      transition: transform 0.7s cubic-bezier(0.76,0,0.24,1), filter 0.3s;
+      filter: saturate(0.88) brightness(0.98);
       pointer-events: none;
     }
+    .photo-card:hover .photo-bg {
+      transform: scale(1.06);
+      filter: saturate(1.05) brightness(1.02);
+    }
+    .photo-overlay {
+      position: absolute; inset: 0; z-index: 5;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 48%);
+      opacity: 0; transition: opacity 0.3s;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 16px 14px; pointer-events: none;
+    }
+    .photo-card:hover .photo-overlay { opacity: 1; }
+    .photo-meta {
+      transform: translateY(8px); opacity: 0;
+      transition: transform 0.3s 0.04s, opacity 0.3s 0.04s;
+    }
+    .photo-card:hover .photo-meta { transform: none; opacity: 1; }
+    .photo-num {
+      font-size: 9px; letter-spacing: 0.2em; color: rgba(255,255,255,0.55);
+      margin-bottom: 3px;
+    }
 
-    /* Infos bas de carte */
-    .project-info {
-      padding: 24px 24px 20px;
-      display: flex; flex-direction: column; gap: 10px;
-      flex: 1;
+    /* ══ SECTION PARTENAIRES ══ */
+    .partners-section {
+      background: var(--noir); padding: 72px 40px; margin-top: 56px;
     }
-    .project-info-top {
-      display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    .partners-header { margin-bottom: 12px; }
+    .partners-eyebrow {
+      font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 12px;
     }
-    .project-name {
-      font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400;
-      line-height: 1.2; letter-spacing: -0.3px;
+    .partners-eyebrow::before { content:''; width: 22px; height: 1px; background: currentColor; display:block; }
+    .partners-title {
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 700;
+      font-size: clamp(32px, 4.2vw, 50px); letter-spacing: -0.5px; line-height: 1.05;
+      color: var(--blanc); margin-bottom: 12px;
     }
-    .project-tags { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
-    .tag {
-      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--muted); padding: 4px 9px; border: 1px solid var(--rule);
+    .partners-title em { font-style: normal; color: rgba(255,255,255,0.35); }
+    .partners-intro {
+      font-size: 13px; color: rgba(255,255,255,0.45);
+      letter-spacing: 0.05em; line-height: 1.8;
+      max-width: 600px; margin-bottom: 48px;
     }
-    .project-desc {
-      font-size: 13px; color: var(--muted); line-height: 1.75;
-      letter-spacing: 0.02em;
+    .partners-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 6px;
     }
-    .project-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--rule);
+    .partner-card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4; background: rgba(255,255,255,0.06);
     }
-    .project-year { font-size: 10px; color: rgba(44,62,80,0.3); letter-spacing: 0.15em; }
-    .project-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      text-decoration: none;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--blue); padding: 9px 18px;
-      border: 1px solid var(--rule);
-      background: var(--white);
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    .partner-card::after {
+      content: ''; position: absolute; inset: 0; z-index: 10;
+      -webkit-user-drag: none;
     }
-    .project-btn:hover {
-      background: var(--blue); color: var(--cream); border-color: var(--blue);
+    .partner-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center top;
+      background-repeat: no-repeat;
+      transition: transform 0.7s cubic-bezier(0.76,0,0.24,1);
+      filter: saturate(0.85) brightness(0.9);
+      pointer-events: none;
     }
-    .project-btn::after { content: '↗'; font-size: 13px; }
+    .partner-card:hover .partner-bg {
+      transform: scale(1.05);
+      filter: saturate(1) brightness(1);
+    }
+    .partner-caption {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 6;
+      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 100%);
+      padding: 28px 16px 14px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .partner-card:hover .partner-caption { opacity: 1; }
+    .partner-caption span {
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 15px; font-weight: 400;
+      color: #fff; letter-spacing: 0.02em;
+    }
 
-   
-
-    /* ══ FOOTER ══ */
+    /* ══ FOOTER (conservé, non utilisé dans le HTML source) ══ */
     footer {
-      background: #1a252f; border-top: 1px solid rgba(247,244,239,0.06);
+      background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.06);
       padding: 32px 40px; display: flex; flex-direction: column;
-      align-items: center; gap: 14px;
+      align-items: center; gap: 16px;
     }
     .footer-cartoon {
       width: 80px; height: auto; opacity: 0.7;
       filter: brightness(0) invert(1);
       -webkit-user-drag: none; pointer-events: none;
     }
-    .footer-copy { font-size: 11px; color: rgba(247,244,239,0.28); letter-spacing: 0.1em; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.28); letter-spacing: 0.1em; text-align: center; }
+
+    @media print {
+      .photo-bg, .partner-bg { background-image: none !important; background-color: #ccc !important; }
+    }
 
     @keyframes up {
       from { opacity: 0; transform: translateY(16px); }
@@ -256,192 +328,476 @@
     }
 
     /* ══ RESPONSIVE ══ */
-    @media (max-width: 860px) {
-      .projects-grid { grid-template-columns: 1fr; }
-      .page-header, .web-section, .skills-band { padding-left: 20px; padding-right: 20px; }
+    @media (max-width: 900px) {
+      .page-header, .cat-section { padding-left: 20px; padding-right: 20px; }
+      .cat-nav { padding: 0 20px; }
+      .partners-section { padding: 56px 20px; }
+      .partners-grid { grid-template-columns: repeat(3,1fr); }
       footer { padding: 24px 20px; }
-      .burger-btn { right: 16px; }
-      .site-logo { left: 16px; }
+      .site-header { padding: 0 16px; }
     }
-  </style>
+    @media (max-width: 560px) {
+      .photo-grid { grid-template-columns: repeat(2,1fr); }
+      .partners-grid { grid-template-columns: repeat(2,1fr); }
+    }
+</style>
 </head>
 <body>
 
-<a href="https://chiron-site.github.io/Portfolio-accueil-Louis-Chiron/" class="site-logo">LC.</a>
+<header class="site-header">
+  <a class="insta-link" href="https://www.instagram.com/i_got_it_picture/" target="_blank" rel="noopener" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="20" height="20" rx="6" stroke="#111111" stroke-width="1.7"/>
+      <circle cx="12" cy="12" r="5" stroke="#111111" stroke-width="1.7"/>
+      <circle cx="17.4" cy="6.6" r="1.25" fill="#111111"/>
+    </svg>
+  </a>
 
-<button class="burger-btn" id="burgerBtn" aria-label="Menu">
-  <div class="burger-box"><span></span><span></span><span></span></div>
-</button>
+  <a href="louis-accueil.html" class="site-logo">louis</a>
 
-<div class="fullmenu" id="fullMenu">
-  <div>
-    <ul class="menu-nav">
-      <li><a href="https://websites07.github.io/Portfolio-accueil/" class="menu-link">Accueil</a></li>
-      <li><a href="https://websites07.github.io/Portfolio-photographie/" class="menu-link">Photographie</a></li>
-      <li><a href="https://websites07.github.io/Portfolio-affiches/" class="menu-link">Affiches</a></li>
-      <li><a href="https://websites07.github.io/Portfolio-videos/" class="menu-link">Vidéos</a></li>
-      <li><a href="https://websites07.github.io/Portfolio-web/" class="menu-link">Web</a></li>
-    </ul>
-  </div>
-  <div class="menu-footer">
-    
-    <div class="menu-socials">
+  <button class="burger-btn" id="burgerBtn" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
 
-    </div>
-  </div>
-</div>
+<nav class="nav-overlay" id="navOverlay">
+  <ul>
+    <li><a href="louis-accueil.html" class="nav-link">Accueil</a></li>
+    <li><a href="louis-photographie.html" class="nav-link">Photographie</a></li>
+    <li><a href="louis-web.html" class="nav-link">Sites Web</a></li>
+    <li><a href="louis-contact.html" class="nav-link">Contact</a></li>
+  </ul>
+</nav>
 
 <!-- HEADER -->
 <header class="page-header">
   <div>
-    <div class="header-eyebrow">Développement web</div>
-    <h1 class="page-title">Projets<br><em>&amp; Sites.</em></h1>
+    <div class="header-eyebrow">Galerie photographique</div>
+    <h1 class="page-title">Mes<br><em>Photographies.</em></h1>
   </div>
   <div class="header-right">
-    <div class="header-count">Web <span></span></div>
-    <div class="header-sub">HTML · CSS </div>
+
+    <div class="header-tagline">Sport · Rue · Militaire · Montagne · Animaux</div>
   </div>
 </header>
 
+<!-- NAV STICKY -->
+<nav class="cat-nav">
+  <a href="#rue" class="cat-tab active" data-target="rue">Rue <span class="cnt">9</span></a>
+  <a href="#militaire" class="cat-tab" data-target="militaire">Militaire <span class="cnt">6</span></a>
+  <a href="#sport" class="cat-tab" data-target="sport">Sport <span class="cnt">18</span></a>
+  <a href="#montagne" class="cat-tab" data-target="montagne">Montagne <span class="cnt">6</span></a>
+  <a href="#animaux" class="cat-tab" data-target="animaux">Animaux <span class="cnt">6</span></a>
+  <a href="#confiance" class="cat-tab" data-target="confiance">Ils m'ont fait confiance</a>
+</nav>
 
 
-<!-- GRILLE PROJETS -->
-<section class="web-section">
-  <div class="projects-grid">
+<!-- ══════════ RUE ══════════ -->
+<section class="cat-section" id="rue">
+  <div class="cat-header">
+    <div class="cat-title"><span class="cat-icon"></span> Rue</div>
+    <div class="cat-badge">15
+    photos</div>
+  </div>
+  <div class="photo-grid">
 
-    <!-- PROJET 1 -->
-    <div class="project-card">
-      <div class="browser-bar">
-        <div class="browser-dots"><span></span><span></span><span></span></div>
-        <div class="browser-url">chiron-site.github.io/RodolpheChiron/</div>
-      </div>
-      <div class="project-preview">
-        <img src="https://tse3.mm.bing.net/th/id/OIP.NLBetbD-to_CO2uFaZ79TgHaFf?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Rodolphe Chiron — VRP Chaussures"/>
-        <div class="preview-num">01</div>
-      </div>
-      <div class="project-info">
-        <div class="project-info-top">
-          <div class="project-name">Rodolphe Chiron<br>VRP Chaussures</div>
-          <div class="project-tags">
-            <span class="tag">Vitrine</span>
-            <span class="tag">Pro</span>
-          </div>
-        </div>
-        <p class="project-desc">
-          Site vitrine pour un professionnel, un commercial dans le secteur de la chaussure. Présentation des marques représentées ,avec une mise en page  très sobre et lisible.
-        </p>
-        <div class="project-footer">
-          <span class="project-year">2025</span>
-          <a class="project-btn" href="https://websites07.github.io/RodolpheChiron/" target="_blank" rel="noopener">Visiter</a>
-        </div>
-      </div>
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/9aed1e22-221d-4a87-aea5-a866be6d27af-dsc_0867_jpe?asset_id=b2036b74-0872-452f-9da0-bb4218dc160c&img_etag=%220c3fb4ee64464c4b958f2a522d344cd9%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
     </div>
 
-
-     <!-- PROJET 2 -->
-    <div class="project-card">
-      <div class="browser-bar">
-        <div class="browser-dots"><span></span><span></span><span></span></div>
-        <div class="browser-url">chiron-site.github.io/RodolpheChiron/</div>
-      </div>
-      <div class="project-preview">
-        <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/9bca1763-c85f-46d6-bec3-9fd55e8aedc0.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="Vittorio Valenti"/>
-        <div class="preview-num">02</div>
-      </div>
-      <div class="project-info">
-        <div class="project-info-top">
-          <div class="project-name">Vittorio Valenti<br></div>
-          <div class="project-tags">
-            <span class="tag">Vitrine</span>
-            <span class="tag">Pro</span>
-          </div>
-        </div>
-       <p class="project-desc">
-          Site vitrine pour une marque de prêt a porter de luxe italienne imaginaire.Entierement créée par moi. 
-        </p>
-        <div class="project-footer">
-          <span class="project-year">2026</span>
-          <a class="project-btn" href="https://kikiiik.github.io/Vittorio-Valenti/" target="_blank" rel="noopener">Visiter</a>
-        </div>
-      </div>
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/f1deb204-d4f4-4a10-a6b3-e4f8cee7312b-dsc_0934_jpe?asset_id=36d2efa7-2f6c-473f-b2bc-410145ba3a05&img_etag=%22db7e1a4dad5c498f9b2068c29bfaf32e%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">002</div></div></div>
     </div>
 
-
-      <!-- PROJET 3 -->
-    <div class="project-card">
-      <div class="browser-bar">
-        <div class="browser-dots"><span></span><span></span><span></span></div>
-        <div class="browser-url">chiron-site.github.io/RodolpheChiron/</div>
-      </div>
-      <div class="project-preview">
-        <img src="https://tse4.mm.bing.net/th/id/OIP.lFAtK4iBtwhLU3m-goCXtQHaD4?rs=1&pid=ImgDetMain&o=7&rm=3g" alt="Arthur Favreau"/>
-        <div class="preview-num">03</div>
-      </div>
-      <div class="project-info">
-        <div class="project-info-top">
-          <div class="project-name">Arthur Favreau<br></div>
-          <div class="project-tags">
-            <span class="tag">Vitrine</span>
-            <span class="tag">Pro</span>
-          </div>
-        </div>
-       <p class="project-desc">
-          Site vitrine pour un artisan ébeniste. 
-        </p>
-        <div class="project-footer">
-          <span class="project-year">2026</span>
-          <a class="project-btn" href="https://websites07.github.io/Arthur-Favreau-ebeniste/" rel="noopener">Visiter</a>
-        </div>
-      </div>
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/479ad5c7-d7e6-472e-b0ed-d2df5c1a7b26-dsc_1174_jpe?asset_id=eecc5ddc-1bdf-43f6-8ed8-bb51f35656e0&img_etag=%222467079596584ba8b37421f69cb1d850%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">003</div></div></div>
     </div>
 
-    <!-- PROJET 4 -->
-    <div class="project-card">
-      <div class="browser-bar">
-        <div class="browser-dots"><span></span><span></span><span></span></div>
-        <div class="browser-url">chiron-site.github.io/Portfolio-accueil-Louis-Chiron/</div>
-      </div>
-      <div class="project-preview">
-        <img src="https://www.colorhexa.com/2c3e50.png" alt="Portfolio Personnel — Louis Chiron"/>
-        <div class="preview-num">04</div>
-      </div>
-      <div class="project-info">
-        <div class="project-info-top">
-          <div class="project-name">Portfolio Personnel<br>Louis Chiron</div>
-          <div class="project-tags">
-            <span class="tag">Portfolio</span>
-            <span class="tag">Créatif</span>
-          </div>
-        </div>
-        <p class="project-desc">
-          Portfolio créatif multipage regroupant l'ensemble de mes travaux — photographie, affiches, vidéos et développement web. Conçu en language HTML/CSS.
-        </p>
-        <div class="project-footer">
-          <span class="project-year">2026</span>
-          <a class="project-btn" href="https://chiron-site.github.io/Portfolio-accueil-Louis-Chiron/" target="_blank" rel="noopener">Visiter</a>
-        </div>
-      </div>
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/1d2048ac-4c2a-4773-9de9-35c9437c0d91-dsc_1357_jpe?asset_id=bea43158-8c32-4f89-a42c-2165845a163b&img_etag=%22473cae8656d84251a959090ccbf3a7a2%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">004</div></div></div>
     </div>
 
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/426ff9a7-5a80-46e1-9a1c-2ca50026a394-dsc_1898_jpe?asset_id=6c77d8f3-3e3c-427e-a0d6-8c3f5ab73c71&img_etag=%2262460c9c86d54c798ebf64efa6a3911f%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">005</div></div></div>
+    </div>
 
-    
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/9cf2ef5c-13fb-4ab2-b68a-6a29b00868db-dsc_1806_jpe?asset_id=668cd81b-4d88-4f92-8344-3271feed2fff&img_etag=%22f4abe34d4bf9483c9b3a178af2e10fdf%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">006</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/4c42048c-517c-4eeb-89d2-796bca886dd0-a8bf74bc_77d?asset_id=d18576cd-c7dd-43ce-85fe-36b08aacd1f4&img_etag=%223d77db1f05164f84844a090cca5e0264%22&image_assets=false&size=4551')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">007</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/0568c561-c585-4fa7-a86d-3af00925d68e-dsc_8123_jpe?asset_id=bf161153-3dbf-424f-afc6-456fd25ea1fd&img_etag=%222b55761dfd46444f9a0ae640766f9e68%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">008</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/b2b1d6c6-2da1-4a85-9bfc-b61499211215-dsc_8095_jpe?asset_id=2fdac8c7-e858-4408-9490-1dab637fe835&img_etag=%22a1ca547330504203813949646ffcbfc1%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">009</div></div></div>
+    </div>
+
+       <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/58aab0fc-8c8d-4530-8ce6-671a7331a155-dsc_2124_jpe?asset_id=9d34e95c-42b1-4294-ba7d-924f4033ace6&img_etag=%2235edd5e1e7434125b328c98f8b49f47b%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">010</div></div></div>
+    </div>
+
+       <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/181939cd-5e93-4060-9d53-224a73f03a85-dsc_2129_jpe?asset_id=ffa0c81c-ad33-4961-a603-ee2746eb995f&img_etag=%223e7059aa730f4c488472d63f44f1e2f7%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">011</div></div></div>
+    </div>
+
+       <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/bcc933f3-b58f-4cf9-beb6-4812bbaf898d-dsc_2171_jpe?asset_id=fdf3dec5-7f04-4023-b0ee-765d68c5c68c&img_etag=%229075dd3b414c451293702857f6b806fd%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">012</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/9f9d6e17-f6dd-4a70-9959-9221e749ef4f-dsc_1818_jpe?asset_id=036ad0a7-1c4a-4bf7-8936-09003e94f577&img_etag=%224921ac168c2a4773b7e809eac83da12f%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">013</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/bf3d2a95-b554-4d26-a945-7703bc3f6a7a-dsc_1913_jpe?asset_id=7a9a65b4-c037-4bd3-838f-eddf45e62d40&img_etag=%225c815a961dd54d54b43ad9b66c63e9fb%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">014</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/8e0efaef-7386-456e-afde-cc85c97665b7-dsc_1920_jpe?asset_id=ff0533ec-da64-4f98-bc60-7013722a84e7&img_etag=%22b7d729f5b46a42b1b1a2554510c9f00a%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">015</div></div></div>
+    </div>
 
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
- 
-  <p class="footer-copy">© 2026 Louis Chiron — Tous droits réservés</p>
-</footer>
+<!-- ══════════ MILITAIRE ══════════ -->
+<section class="cat-section" id="militaire">
+  <div class="cat-header">
+    <div class="cat-title"><span class="cat-icon"></span> Militaire</div>
+    <div class="cat-badge">6 photos</div>
+  </div>
+  <div class="photo-grid">
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/4b2fd696-ef68-4697-9ea7-5cde63e8ff66-dsc_8614_jpe?asset_id=0b367f20-8a09-417b-ac91-f6faad97e09d&img_etag=%227f0429c5fb214083986f0dae34e4b8c4%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/3a5fa031-5397-4feb-a91e-b6d164765000-dsc_8636_jpe?asset_id=6b226b78-9676-467c-b776-3bdca389f3b7&img_etag=%22ccb46923f3a54babaf95f0c5a75975f9%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">002</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/ee3091a2-2dbf-4244-b841-553151a38a76-dsc_8817_jpe?asset_id=c243896b-fdb5-4a17-9829-578595f65b9f&img_etag=%22a789793c59b542c59d06660bee4eb898%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">003</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/31731974-5324-4f1b-bdda-fd0dac4f879e-dsc_9270_jpe?asset_id=6c480bac-432d-4946-aa7f-048c74c64715&img_etag=%2272550e942581414bacbb841e5a1e2b60%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">004</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/36222351-f00d-4943-8293-9637c15042fa-img_3823_jpe?asset_id=302d7fbf-e8a5-441a-8dc8-5eb5ffa9f441&img_etag=%22c8f528c15bad4bf0915a680aded78fa1%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">005</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/f0c439c3-9732-46d0-a04a-7ca3363901c4-img_3824_jpe?asset_id=c058d8e9-825f-492a-a4fa-228bcd7acb07&img_etag=%22a6b58b3db80343488f2e962323ec0ee3%22&image_assets=false&size=3839')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">006</div></div></div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════ SPORT ══════════ -->
+<section class="cat-section" id="sport">
+  <div class="cat-header">
+    <div class="cat-title"><span class="cat-icon"></span> Sport</div>
+    <div class="cat-badge">18 photos</div>
+  </div>
+  <div class="photo-grid">
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/12e70eb4-99ce-414d-9728-3448581ed3ed-dsc_2827_jpe?asset_id=b39da2ee-f55a-4877-a4fd-6133e8eac9fc&img_etag=%22225aa227431045d58fb405f6ab310025%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/672f7b93-8aaf-4e77-98cf-a54f71b3096e-dsc_3735_jpe?asset_id=9782bd56-9962-4ad0-a4f6-b59954b18464&img_etag=%22d63d458c8eb740f8bf0b510197a5e1dd%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">002</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/94e562b3-3498-4cb4-bd5b-2823d0afa631-img_3825_jpe?asset_id=5b2ac91f-798d-49ce-8745-1b3a9c89ec43&img_etag=%22faa2d88dbfbe48ccb80fd6d55efa3817%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">003</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/9af93eee-ddcc-4432-a696-cfacf3a4fb8b-dsc_1122_jpe?asset_id=16f3ac77-5d3c-4d8e-bee1-41294983e0d1&img_etag=%224ac52acc59084d519bcb41ab11353a29%22&image_assets=false&size=2560')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">004</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/80a534c4-b383-47bc-94e3-3bd8fe796e65-dsc_3314_jpe?asset_id=5fbc2d55-7a1b-413b-ab0c-2ac95b816c4a&img_etag=%22c67a9f232e974534be4df2106d779917%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">005</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/a3dcdfc3-bcf8-4ed3-a63d-9b52ad2aa446-dsc_0966_jpe?asset_id=cb5a899f-2155-488e-89e8-82f3e3c325b4&img_etag=%2226eddea80dcd45ddb9312c65886ecdca%22&image_assets=false&size=2560')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">006</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/f14383e5-d3eb-4afe-b808-299faf6ec92b-dsc_0277_jpe?asset_id=d3a54ffe-50d5-4e6c-8777-540742f61c93&img_etag=%22cf7ad9cd7b0c431cb6418abd8375dd2d%22&image_assets=false&size=2560')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">007</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/70e6736f-b72f-450e-9bb4-a3b3e2657c6f-dsc_0338_jpe?asset_id=4801f81a-91f7-4b3c-879b-dd5cb6b824aa&img_etag=%223ca8596a5ee94e23b1d242a3c98aa039%22&image_assets=false&size=2560')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">008</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/77717cad-1746-49ab-be4f-21567c7205fb-img_0966_jpe?asset_id=aa2a9a49-e90e-47f2-827f-5bbc7301b2b4&img_etag=%2271e3fd753bce4886949f9751e0608e4e%22&image_assets=false&size=2560')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">009</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/d9433842-8178-46fd-ac51-0c3e72b7c564-dsc_5689_jpe?asset_id=cecd90a2-6ad1-4f09-8f37-99ab0c6a8c24&img_etag=%2295a0f806a16f43b6a342518be513d3de%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">010</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/92672087-fe5a-4061-83ba-12fc8a4ec4d4-dsc_5753_jpe?asset_id=38c33964-d306-46d5-b923-2ffab2767527&img_etag=%220f74696195bd4a1780b77f3ed4fa7b10%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">011</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/78445bbc-75a4-4676-ac71-ca1c68b32c33-dsc_5701_jpe?asset_id=afdcd28d-e5f9-4499-bb99-e91192e0e6c0&img_etag=%22168cd301fb48437d8174040e51ece7ef%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">012</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/a7a831fc-7154-48d8-9253-ddfabc142d1c-dsc_7466_jpe?asset_id=334dc868-9cf1-4c55-b9fc-f51c2310390d&img_etag=%22e17f6cb3b7bd4e9b90db2bf9710944c2%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">013</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/e2e6a6c8-9e17-4ca3-bd53-54d66dd59ef2-dsc_7549_jpe?asset_id=e9e89990-3cec-41a2-b63f-4b7b6af1c659&img_etag=%2200275caa0c054aa0b5f0803926264371%22&image_assets=false&size=3841')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">014</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/826a7a73-c1cc-4191-a6b5-c755880be103-dsc_7607_jpe?asset_id=b8b0a8d8-746a-4d56-a617-ab23b7c62883&img_etag=%2281ed0dbdefcf4c13bbd50d0eed2c1f96%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">015</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/402fd52e-a514-4fd6-bc93-9f4e858709f0-img_6258_jpe?asset_id=7101e4e1-d065-4039-a81d-e567b4609591&img_etag=%22b580b5cae9bd4e739884b33b4425e5ec%22&image_assets=false&size=3413')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">016</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/6415800d-f0f5-439d-a8e5-391f6b75639a-dsc_7555_jpe?asset_id=b3c34a63-1fec-413d-a8a0-7ebd5ea9caf1&img_etag=%2211f66c4c265a492b988d42a4e1ded5cf%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">017</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/70fa54d7-cc9e-4d10-bdcd-f0e3fa19dd22-img_0919_jpe?asset_id=6ee6ce0c-369a-4bc6-b139-f42a1bf59c8a&img_etag=%22a7d7e386f57742b49abf85bc11effda7%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">018</div></div></div>
+    </div>
+
+        <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/7e6aac9b-2ce4-4ea0-92a6-07e6db7c7af7-img_8482_jpe?asset_id=f809d463-735b-4651-bf54-131d8b4a3b48&img_etag=%22d63b14d5077849c488e97d2f047bbf9b%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">018</div></div></div>
+    </div>
+
+      <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/6d4978f0-fa7e-4ef1-811c-653a506561dd-img_8504_jpe?asset_id=a254178c-4194-4419-887d-df2defdf7200&img_etag=%225a3583f236204f44af5e516045d86651%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">018</div></div></div>
+    </div>
+
+      <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/2cfabd5a-bde5-42ff-8336-ec5238d01e20-img_8489_jpe?asset_id=aecaed3a-4d22-43df-a128-c87b4456bea7&img_etag=%22e5ca5820c9c2439fa52af30f9c33580a%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">018</div></div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ MONTAGNE ══════════ -->
+<section class="cat-section" id="montagne">
+  <div class="cat-header">
+    <div class="cat-title"><span class="cat-icon"></span> Montagne</div>
+    <div class="cat-badge">6 photos</div>
+  </div>
+  <div class="photo-grid">
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/ecdfb620-6b28-47bf-b818-56fbd7596845-dsc_9705_jpe?asset_id=5bd7cd41-80f5-4c49-820d-7d456b93f1c7&img_etag=%225aab6349dbdb43ee84efec45348267fe%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/ed41e426-6fc8-4339-9481-01dd50e87ed9-dsc_9823_jpe?asset_id=76b91c9e-b929-4f15-b99c-61d46264b511&img_etag=%22cb84218f354549b7a7d9d633794ae2e7%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">002</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/eafab003-c841-4025-a6f2-febe01f77d90-dsc_9779_jpe?asset_id=ba5cbb95-6d45-482f-99db-91a51a3fd337&img_etag=%22be1cc92936c74de384d0b8d54a47f539%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">003</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/ba9ef5bb-a006-4077-b862-b52edfc2f42b-img_0606_jpe?asset_id=e7a779a2-b714-4137-ad79-03ed91331a4d&img_etag=%224a9cc09ba2dc4a1585a962f8b62e2102%22&image_assets=false&size=3917')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">004</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/1826e253-ce9e-4884-ab9b-c330a299c5dd-img_7281_jpe?asset_id=fd89a2f0-a61b-4a9e-b0ef-62c2081dd08e&img_etag=%2214b019d15be84e22986cca99e8ed481b%22&image_assets=false&size=3413')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">005</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/d8a17a33-3ec1-4a00-a2dd-9b4e90527dd2-gopr1243_jpe?asset_id=2de836a4-f647-4bd4-86ea-4a2375fb69d4&img_etag=%22d16fd83e5cf84b0194dfd7a6d2c94827%22&image_assets=false&size=3413')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">006</div></div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ ANIMAUX ══════════ -->
+<section class="cat-section" id="animaux">
+  <div class="cat-header">
+    <div class="cat-title"><span class="cat-icon"></span> Animaux</div>
+    <div class="cat-badge">6 photos</div>
+  </div>
+  <div class="photo-grid">
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/4d1d6de9-d491-445d-961d-3c392c6b6792-dsc_8293_jpe?asset_id=f10fd80b-c234-48eb-a607-033ebf84bc83&img_etag=%22397f14a28195474eb2d2ed47e8a56fc0%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/c9deb7ef-5baf-4c2f-a527-3949cfae78a6-dsc_8362_jpe?asset_id=dd3dc153-a945-42e5-baec-326d839f58f8&img_etag=%22a812306c91d144e38d2fa00f2e2e733c%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">002</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/adfbe12b-4a13-48d6-bb19-9e834db2ac0c-dsc_7899_jpe?asset_id=041a3689-7fc5-4f0d-a6c0-505ca91d060f&img_etag=%22c8c1e27e3513459f8f4e7876d2616067%22&image_assets=false&size=3332')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">003</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/43e25bdb-fcce-43af-b70b-33c7895e45f0-dsc_7937_jpe?asset_id=a549adad-bbc5-4486-aeea-850b6ec5cf37&img_etag=%2257ffec30445a4af5b21f5eaa8342f8fa%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">004</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/2abc5811-6379-41b9-94d1-6c8464341af7-dsc_7910_jpe?asset_id=d66ceb89-930d-4b98-a7e0-b9fee787e01c&img_etag=%226167d4689c194643baff2a35c1c7df81%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">005</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/JO0KPUQ1MnxN3/resources/2ddaa874-5b12-4847-81af-b185c52e5e68-dsc_7932_jpe?asset_id=ad5402d3-aac7-4eb6-ae68-9800e1b3d313&img_etag=%224eedf86977cc47ab9ee7e9de4376f2bf%22&image_assets=false&size=3842')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">006</div></div></div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════ ILS M'ONT FAIT CONFIANCE ══════════ -->
+<section class="partners-section" id="confiance">
+  <div class="partners-header">
+    <div class="partners-eyebrow">Références</div>
+    <h2 class="partners-title">Ils m'ont<br>fait <em>confiance.</em></h2>
+    <p class="partners-intro">Voici quelques partenaires et projets avec lesquels j'ai eu le plaisir de collaborer. Merci pour leur confiance.</p>
+  </div>
+  <div class="partners-grid">
+
+    <div class="partner-card">
+      <div class="partner-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/e45fd4a4-fea1-40b0-a45d-0b1214d9f3fb-img_3819_jpe?asset_id=e2272aa5-a94f-4918-8cc9-6dacd4b3c8b3&img_etag=%22b8219aaf8a364117a2debb7e04ea703c%22&image_assets=false&size=3370')"></div>
+      <div class="partner-caption"><span>Showroom Hotmilk</span></div>
+    </div>
+
+    <div class="partner-card">
+      <div class="partner-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/a2a19abf-dd61-440f-962d-76842d75dfa0-img_3818_jpe?asset_id=3c54c10f-2797-428f-957a-bc485fb86d2d&img_etag=%2289e0115f708345b689951606d9b13cdc%22&image_assets=false&size=3842')"></div>
+      <div class="partner-caption"><span>Entente Sèvre</span></div>
+    </div>
+
+    <div class="partner-card">
+      <div class="partner-bg" style="background-image:url('https://new.express.adobe.com/webpage/TsLCb6f4qSFm9/resources/933f6cfd-a871-474e-b14e-c208e0b54444-dsc_1199_jpe?asset_id=5cbe81ee-a407-4568-8035-535996f58b6e&img_etag=%22435d60eb4b3247e38e09b82a5bec5549%22&image_assets=false&size=3842')"></div>
+      <div class="partner-caption"><span>Nuances Unikalo</span></div>
+    </div>
+
+  </div>
+</section>
 
 <script>
+  /* ── Burger ── */
   document.getElementById('burgerBtn').addEventListener('click', () =>
     document.body.classList.toggle('menu-open')
   );
-  document.querySelectorAll('.menu-link').forEach(a =>
+  document.querySelectorAll('.nav-link').forEach(a =>
     a.addEventListener('click', () => document.body.classList.remove('menu-open'))
   );
+
+  /* ── Nav sticky active au scroll ── */
+  const ids = ['sport','rue','militaire','montagne','animaux','confiance'];
+  const tabs = document.querySelectorAll('.cat-tab[data-target]');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting)
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.target === e.target.id));
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+  tabs.forEach(tab => {
+    tab.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.getElementById(tab.dataset.target);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* ── Protection photos ── */
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.key === 'F12' || e.key === 'PrintScreen' ||
+        (e.ctrlKey && ['s','u','p'].includes(e.key.toLowerCase())) ||
+        (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase())))
+      e.preventDefault();
+  });
+  document.addEventListener('selectstart', e => e.preventDefault());
+  document.querySelectorAll('.photo-card,.partner-card').forEach(c => {
+    c.addEventListener('dragstart', e => e.preventDefault());
+  });
+
+  /* ── DevTools blur ── */
+  setInterval(() => {
+    const open = window.outerWidth - window.innerWidth > 160 ||
+                 window.outerHeight - window.innerHeight > 160;
+    document.querySelectorAll('.photo-bg,.partner-bg').forEach(el => {
+      el.style.filter = open ? 'blur(18px) brightness(0.3)' : '';
+    });
+  }, 1000);
 </script>
+
 </body>
 </html>
